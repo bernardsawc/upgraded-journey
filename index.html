@@ -1,0 +1,334 @@
+<html>
+<head>
+	<style>
+	
+@media (min-width: 1080px) {
+  
+*{
+	margin: 0px auto;
+	text-align:center;
+	border: 0px solid black;
+	font-size: 16px;
+}
+body{
+	background-color: #ddbbbb;
+}
+p{
+	display:inline;
+	margin: 0 5px;
+}
+h1{margin: 10px auto;
+	font-size: 32px;
+}
+
+div#menu{
+	width:400px;
+}
+
+div#menu table tbody tr th{
+	padding: 10px 20px;
+	text-align: center;
+}
+
+
+div#menu table tbody tr td{
+	text-align: left;
+}
+
+div#menu table tbody tr td:nth-last-child(2){
+	text-align: center;
+}
+
+div#menu table tbody tr.categoria td{
+	text-align: center;
+}
+
+button#EfetuarPedido{
+	width: 400px;
+	font-size: 30px;
+}
+button{
+	background-color: #ee7777;
+}
+button:hover{
+	background-color: #ee1111;
+}
+
+}
+@media (max-width: 1080px) { 
+*{
+	margin: 0px auto;
+	text-align:center;
+	border: 0px solid black;
+	font-size: 40px;
+}
+body{
+	background-color: #ddbbbb;
+}
+p{
+	display:inline;
+	margin: 0 5px;
+}
+h1{margin: 25px auto;font-size:62px;}
+
+div#menu{
+	width:100%;
+}
+
+div#menu table tbody tr th{
+	padding: 10px 20px;
+	text-align: center;
+}
+
+
+div#menu table tbody tr td{
+	text-align: left;
+}
+
+div#menu table tbody tr td:nth-last-child(2){
+	text-align: center;
+}
+
+div#menu table tbody tr.categoria td{
+	text-align: center;
+}
+
+button#EfetuarPedido{
+	width: 100%;
+	font-size: 70px;
+}
+button{
+	background-color: #ee7777;
+}
+button:hover{
+	background-color: #ee1111;
+}
+
+}
+@media (max-width: 750px) {
+*{
+	margin: 0px auto;
+	text-align:center;
+	border: 0px solid black;
+	font-size: 30px;
+}
+body{
+	background-color: #ddbbbb;
+}
+p{
+	display:inline;
+	margin: 0 5px;
+}
+h1{margin: 25px auto;font-size:62px;}
+
+div#menu{
+	width:100%;
+}
+
+div#menu table tbody tr th{
+	padding: 10px 20px;
+	text-align: center;
+}
+
+
+div#menu table tbody tr td{
+	text-align: left;
+}
+
+div#menu table tbody tr td:nth-last-child(2){
+	text-align: center;
+}
+
+div#menu table tbody tr.categoria td{
+	text-align: center;
+}
+
+button#EfetuarPedido{
+	width: 100%;
+	font-size: 70px;
+}
+button{
+	background-color: #ee7777;
+}
+button:hover{
+	background-color: #ee1111;
+}
+
+}	
+	
+	
+
+	</style>
+	<title>Comanda</title>
+</head>
+<body>
+	
+	<div id="Menu">
+		<h1>Bar Noturno</h1>
+		<table>
+			<tr>
+				<th>Pedido</th>
+				<th>Quantidade</th>
+				<th>Preço</th>	
+			</tr>
+		</table>
+	</div>
+	
+	<div>
+		<button id="EfetuarPedido" onclick="efetuarPedido()"> efetuar pedido </button>
+	</div>
+	
+</body>
+<script>
+function adicionaCategoria(nomeCategoria){
+	var tabelaMenu = document.getElementById("Menu").getElementsByTagName('table')[0].getElementsByTagName('tbody')[0];
+	var linhaCategoria = document.createElement('tr');
+		var categoria = document.createElement('td');
+		categoria.setAttribute('colspan',3);
+	
+	linhaCategoria.classList.add('categoria');
+	linhaCategoria.appendChild(categoria);
+	categoria.innerHTML=nomeCategoria;
+	tabelaMenu.appendChild(linhaCategoria);
+}
+
+function adicionaPedido(nomePedido, categoriaPedido , precoPedido){
+	var categorias = document.getElementsByClassName('categoria');
+	for(var i=0; i<categorias.length; i++)
+		if(categorias[i].firstChild.innerHTML=="Porções"){
+				var linhaPedido = document.createElement('tr');
+				linhaPedido.classList.add('Pedido');
+					var nomeDoPedido = document.createElement('td');
+					nomeDoPedido.innerHTML = nomePedido;
+					
+					var quantidadePedido = document.createElement('td');
+						var butaoRemoveUnidade = document.createElement('Button');
+						butaoRemoveUnidade.innerHTML="-";
+						quantidadePedido.appendChild(butaoRemoveUnidade);
+						butaoRemoveUnidade.addEventListener("click", alteraQuantidade);
+					
+						var pUnidadeProduto = document.createElement('p');
+						pUnidadeProduto.innerHTML="0";
+						quantidadePedido.appendChild(pUnidadeProduto);
+					
+						var butaoAdicionaUnidade = document.createElement('Button');
+						butaoAdicionaUnidade.innerHTML="+";
+						quantidadePedido.appendChild(butaoAdicionaUnidade);
+						butaoAdicionaUnidade.addEventListener("click",alteraQuantidade);
+					
+					
+					var precoDoPedido = document.createElement('td');
+					precoDoPedido.innerHTML = precoPedido;
+				
+					categorias[i].parentNode.appendChild(linhaPedido);
+					linhaPedido.appendChild(nomeDoPedido);
+					linhaPedido.appendChild(quantidadePedido);
+					linhaPedido.appendChild(precoDoPedido);					
+		}
+}
+
+function alteraQuantidade(){
+	if(this.innerHTML =="+"){
+		this.parentNode.getElementsByTagName('p')[0].innerHTML=parseInt(this.parentNode.getElementsByTagName('p')[0].innerHTML)+1;
+	}else
+	{
+		if(parseInt(this.parentNode.getElementsByTagName('p')[0].innerHTML)>0)
+			this.parentNode.getElementsByTagName('p')[0].innerHTML=parseInt(this.parentNode.getElementsByTagName('p')[0].innerHTML)-1;
+	}
+}
+
+function efetuarPedido(){
+	
+		if(document.getElementsByClassName('valorTotal').length==0)
+		{
+			var valorTotal = 0;
+			var Pedidos = document.getElementsByClassName('Pedido');
+			for( var i=0; i<Pedidos.length;i++){
+				if(parseInt(Pedidos[i].getElementsByTagName('td')[1].getElementsByTagName('p')[0].innerHTML)>0){
+					//alert(Pedidos[i].innerHTML);
+					//decida o que fazer com os pedidos selecionados aqui
+					var valorPedido = 
+					parseInt(Pedidos[i].getElementsByTagName('td')[1].getElementsByTagName('p')[0].innerHTML) *
+					parseFloat(Pedidos[i].getElementsByTagName('td')[2].innerHTML.split(' ')[1]);
+					valorTotal+=valorPedido;
+					//alert(valorTotal);
+					var butoes = Pedidos[i].getElementsByTagName('td')[1].getElementsByTagName('button');
+					for(var j=0; j<butoes.length;j++)
+					butoes[j].style.display='none';
+				}else{
+					Pedidos[i].style.display='none';
+				}
+			}
+			
+			var trValorTotal = document.createElement('tr');
+			trValorTotal.classList.add('valorTotal');
+			document.getElementsByTagName('table')[0].appendChild(trValorTotal);
+				
+				var tdValorTotal = document.createElement('td');
+				tdValorTotal.setAttribute('colspan',3);
+				tdValorTotal.innerHTML='<b>VALOR TOTAL<br>'+"R$ "+valorTotal+",00</b>";
+				trValorTotal.appendChild(tdValorTotal);
+				
+				
+				
+				
+			
+			document.getElementById('EfetuarPedido').innerHTML='Retornar ao Pedido';
+		}else{
+			var valorTotal = document.getElementsByClassName('valorTotal')[0];
+			valorTotal.parentNode.removeChild(valorTotal);
+			
+			var Pedidos = document.getElementsByClassName('Pedido');
+			for( var i=0; i<Pedidos.length;i++){
+				Pedidos[i].style.display='table-row';
+				var butoes = Pedidos[i].getElementsByTagName('td')[1].getElementsByTagName('button');
+				for(var j=0; j<butoes.length;j++)
+					butoes[j].style.display='inline-block';
+			}
+			document.getElementById('EfetuarPedido').innerHTML='efetuar pedido';
+			
+		}
+		
+}
+	
+document.addEventListener("DOMContentLoaded", function(event) {
+    adicionaCategoria("Porções");
+	adicionaPedido("Batata frita","Porções","R$ 20,00");
+	adicionaPedido("Mandioquinha frita","Porções","R$ 20,00");
+	adicionaPedido("Porção de pastéis","Porções","R$ 20,00");
+	adicionaPedido("Porção de Calabresa","Porções","R$ 20,00");
+	adicionaPedido("Filé de Tilápia","Porções","R$ 25,00");
+	adicionaPedido("Bolinho de bacalhau","Porções","R$ 25,00");
+	adicionaPedido("Frango a Passarinho","Porções","R$ 24,00");
+	adicionaPedido("Costelinha de porco","Porções","R$ 24,00");
+	adicionaCategoria("Espetinhos Completos");
+	adicionaPedido("Picanha","Espetinhos Completos","R$ 25,00");
+	adicionaPedido("Contra filé","Espetinhos Completos","R$ 23,00");
+	adicionaPedido("Filé com bacon","Espetinhos Completos","R$ 23,00");
+	adicionaPedido("Cupim","Espetinhos Completos","R$ 18,00");
+	adicionaPedido("Káfta","Espetinhos Completos","R$ 16,00");
+	adicionaPedido("Frango com bacon","Espetinhos Completos","R$ 16,00");
+	adicionaPedido("Queijo","Espetinhos Completos","R$ 16,00");
+	adicionaCategoria("Espetinhos Simples");
+	adicionaPedido("Picanha","Espetinhos Simples","R$ 9,00");
+	adicionaPedido("Contra filé","Espetinhos Simples","R$ 7,00");
+	adicionaPedido("Filé com bacon","Espetinhos Simples","R$ 8,00");
+	adicionaPedido("Cupim","Espetinhos Simples","R$ 6,00");
+	adicionaPedido("Káfta","Espetinhos Simples","R$ 5,00");
+	adicionaPedido("Frango com bacon","Espetinhos Simples","R$ 6,00");
+	adicionaPedido("Queijo","Espetinhos Simples","R$ 6,00");
+	adicionaCategoria("Bebidas");
+	adicionaPedido("Chopp Brahma","Bebidas","R$ 12,00");
+	adicionaPedido("Cerveja lata","Bebidas","R$ 5,00");
+	adicionaPedido("Cerveja Longneck","Bebidas","R$ 8,00");
+	adicionaPedido("Cerveja 600","Bebidas","R$ 12,00");
+	adicionaPedido("Refrigerante lata","Bebidas","R$ 6,00");
+	adicionaPedido("Refrigerante 600","Bebidas","R$ 7,00");
+	adicionaPedido("Refrigerante 1L","Bebidas","R$ 8,00");
+	adicionaPedido("Refrigerante 2L","Bebidas","R$ 12,00");
+	adicionaPedido("Suco copo","Bebidas","R$ 8,00");
+	adicionaPedido("Suco jarra","Bebidas","R$ 12,00");
+  });
+
+</script>
+</html>
